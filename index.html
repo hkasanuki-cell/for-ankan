@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>manaMate – 受講ページ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-logo">
+      <span class="logo-icon">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+        </svg>
+      </span>
+      <span class="logo-text">manaMate</span>
+      <span class="completion-badge">修了率 62%</span>
+    </div>
+    <button class="header-menu" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main class="viewer">
+    <div class="viewer-grid">
+      <!-- 動画エリア -->
+      <section class="video-area">
+        <div class="video-player" id="videoPlayer">
+          <div class="video-screen">
+            <div class="video-banner">
+              <span class="video-banner-title" id="videoTitle">令和8年度安全運転管理者等講習</span>
+            </div>
+            <button class="play-overlay" id="playOverlay" aria-label="再生">
+              <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <div class="video-controls">
+            <button class="ctrl-btn" id="playBtn" aria-label="再生／一時停止">
+              <svg class="icon-play" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <svg class="icon-pause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+            </button>
+            <span class="ctrl-time"><span id="curTime">1:40</span> / <span id="totTime">55:44</span></span>
+            <div class="ctrl-progress"><div class="ctrl-progress-fill" id="progressFill"></div></div>
+            <button class="ctrl-btn" aria-label="音量">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z"/></svg>
+            </button>
+            <button class="ctrl-btn" aria-label="全画面">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+            </button>
+            <button class="ctrl-btn" aria-label="設定">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+            </button>
+          </div>
+        </div>
+        <h1 class="lecture-title" id="lectureTitle">02_安全運転管理者等講習_自動車安全運転センター松本様</h1>
+        <p class="lecture-meta">令和8年度安全運転管理者等講習 ・ 全6章</p>
+      </section>
+
+      <!-- サイドパネル（タブ切替） -->
+      <aside class="side-panel">
+        <div class="panel-tabs" role="tablist">
+          <button class="panel-tab is-active" id="tabChapters" role="tab" aria-selected="true">チャプター</button>
+          <button class="panel-tab" id="tabChat" role="tab" aria-selected="false">チャット</button>
+        </div>
+
+        <!-- チャプター一覧 -->
+        <div class="panel-pane is-active" id="paneChapters" role="tabpanel">
+          <ul class="chapter-list" id="chapterList">
+            <li class="chapter-item is-done" data-title="01_安全運転管理者等講習_福岡県警様" data-time="49:06">
+              <span class="chapter-state"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span>
+              <span class="chapter-info"><span class="chapter-num">第1章</span><span class="chapter-name">福岡県警様</span></span>
+              <span class="chapter-time">49:06</span>
+            </li>
+            <li class="chapter-item is-current" data-title="02_安全運転管理者等講習_自動車安全運転センター松本様" data-time="55:44">
+              <span class="chapter-state"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+              <span class="chapter-info"><span class="chapter-num">第2章</span><span class="chapter-name">自動車安全運転センター 松本様</span></span>
+              <span class="chapter-time">55:44</span>
+            </li>
+            <li class="chapter-item" data-title="03_安全運転管理者等講習_日本自動車連盟(JAF)福岡支店田中様" data-time="1:02:31">
+              <span class="chapter-state"><span class="chapter-dot">3</span></span>
+              <span class="chapter-info"><span class="chapter-num">第3章</span><span class="chapter-name">日本自動車連盟(JAF)福岡支店 田中様</span></span>
+              <span class="chapter-time">1:02:31</span>
+            </li>
+            <li class="chapter-item" data-title="04_安全運転管理者等講習_日本自動車タイヤ協会森田様" data-time="58:46">
+              <span class="chapter-state"><span class="chapter-dot">4</span></span>
+              <span class="chapter-info"><span class="chapter-num">第4章</span><span class="chapter-name">日本自動車タイヤ協会 森田様</span></span>
+              <span class="chapter-time">58:46</span>
+            </li>
+            <li class="chapter-item" data-title="05_安全運転管理者等講習_日新火災 松元様" data-time="47:56">
+              <span class="chapter-state"><span class="chapter-dot">5</span></span>
+              <span class="chapter-info"><span class="chapter-num">第5章</span><span class="chapter-name">日新火災 松元様</span></span>
+              <span class="chapter-time">47:56</span>
+            </li>
+            <li class="chapter-item" data-title="06_安全運転管理者等講習_大学教授 大上様" data-time="48:55">
+              <span class="chapter-state"><span class="chapter-dot">6</span></span>
+              <span class="chapter-info"><span class="chapter-num">第6章</span><span class="chapter-name">大学教授 大上様</span></span>
+              <span class="chapter-time">48:55</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- チャット -->
+        <div class="panel-pane" id="paneChat" role="tabpanel" hidden>
+          <div class="chat-thread" id="chatThread">
+            <div class="chat-row chat-ai">
+              <span class="chat-avatar"></span>
+              <div class="chat-bubble">今のところ、理解できた？</div>
+            </div>
+            <div class="chat-row chat-me">
+              <div class="chat-bubble">ちょっと難しかったね。でも先生分かりやすい。</div>
+            </div>
+            <div class="chat-row chat-ai">
+              <span class="chat-avatar"></span>
+              <div class="chat-bubble">ぼくもそう思う！実際の事故事例の映像があると、注意するポイントが記憶に残りやすいよね。日々の安全確認が大事なんだよ。</div>
+            </div>
+            <div class="chat-row chat-me">
+              <div class="chat-bubble">たしかに笑</div>
+            </div>
+          </div>
+          <form class="chat-input" id="chatForm">
+            <input type="text" id="chatField" placeholder="メッセージを入力…" autocomplete="off" />
+            <button type="submit" class="chat-send" aria-label="送信">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 20.5 21 12 3 3.5 3 10l11 2-11 2z"/></svg>
+            </button>
+          </form>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
