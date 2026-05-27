@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>管理画面 – 統計データ｜令和8年度安全運転管理者等講習</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+    :root {
+      --primary: #158274;
+      --secondary: #19B184;
+      --accent: #52AA81;
+      --error: #CC4953;
+      --bg: #F9FAF8;
+      --panel-bg: #EAF3EE;
+      --text-primary: #212529;
+      --text-secondary: #505749;
+      --border: #C8CDBC;
+      --white: #fff;
+      --track: #e3e7df;
+      --font-family: "Noto Sans JP", sans-serif;
+      --shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-family);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ヘッダー */
+    .admin-header {
+      background: var(--white);
+      border-bottom: 1px solid #e7ebe3;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .admin-brand { display: flex; align-items: center; gap: 12px; }
+    .admin-logo {
+      width: 32px; height: 32px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .admin-title { font-weight: 700; font-size: 1.1rem; color: var(--primary); }
+    .admin-title small { display: block; font-size: 0.72rem; color: var(--text-secondary); font-weight: 500; }
+    .back-link {
+      font-size: 0.85rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 100px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .back-link:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    /* レイアウト */
+    .admin-main { max-width: 1100px; margin: 28px auto 60px; padding: 0 28px; }
+    .page-head { margin-bottom: 24px; }
+    .page-head h1 { font-size: 1.5rem; color: var(--text-primary); }
+    .page-head p { color: var(--text-secondary); font-size: 0.9rem; }
+    .demo-note {
+      display: inline-block;
+      margin-top: 10px;
+      background: #FCE5D8;
+      color: #C8632B;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    /* KPIカード */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: var(--white);
+      border: 1px solid #e7ebe3;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .kpi-label { font-size: 0.82rem; color: var(--text-secondary); font-weight: 500; }
+    .kpi-value { font-size: 1.9rem; font-weight: 700; color: var(--primary); margin-top: 6px; }
+    .kpi-value small { font-size: 0.95rem; font-weight: 500; color: var(--text-secondary); }
+    .kpi-sub { font-size: 0.76rem; color: var(--accent); font-weight: 700; margin-top: 2px; }
+
+    /* パネル */
+    .panel-row { display: grid; grid-template-columns: 360px 1fr; gap: 24px; margin-bottom: 24px; }
+    .panel {
+      background: var(--white);
+      border: 1px solid #e7ebe3;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+    .panel-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .panel-caption { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 20px; }
+
+    /* ドーナツ（全体完了率） */
+    .donut-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 8px 0; }
+    .donut {
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: conic-gradient(var(--secondary) 0% 70%, var(--track) 70% 100%);
+    }
+    .donut-hole {
+      width: 128px; height: 128px;
+      background: var(--white);
+      border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .donut-value { font-size: 2.4rem; font-weight: 700; color: var(--primary); line-height: 1; }
+    .donut-sub { font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px; }
+    .donut-legend { display: flex; gap: 18px; font-size: 0.8rem; color: var(--text-secondary); }
+    .donut-legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .dot { width: 10px; height: 10px; border-radius: 3px; }
+
+    /* 横棒グラフ（章別） */
+    .bar-row { display: grid; grid-template-columns: 1fr 56px; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .bar-row:last-child { margin-bottom: 0; }
+    .bar-name { font-size: 0.86rem; color: var(--text-primary); margin-bottom: 6px; }
+    .bar-name b { color: var(--text-secondary); font-size: 0.74rem; font-weight: 700; margin-right: 6px; }
+    .bar-track { height: 12px; background: var(--track); border-radius: 100px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+    .bar-value { font-size: 0.95rem; font-weight: 700; color: var(--primary); text-align: right; font-variant-numeric: tabular-nums; }
+
+    /* 縦棒グラフ（時間帯別） */
+    .col-chart { display: flex; align-items: flex-end; gap: 14px; height: 200px; padding-top: 16px; }
+    .col {
+      flex: 1;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+      height: 100%;
+      gap: 8px;
+    }
+    .col-bar {
+      width: 100%;
+      max-width: 54px;
+      background: var(--accent);
+      border-radius: 8px 8px 0 0;
+      transition: height 0.3s;
+    }
+    .col.is-peak .col-bar { background: linear-gradient(180deg, var(--secondary), var(--primary)); }
+    .col-pct { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); }
+    .col.is-peak .col-pct { color: var(--primary); }
+    .col-label { font-size: 0.72rem; color: var(--text-secondary); text-align: center; }
+    .peak-note {
+      margin-top: 18px;
+      font-size: 0.86rem;
+      color: var(--primary);
+      font-weight: 700;
+      background: var(--panel-bg);
+      padding: 10px 16px;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 860px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .panel-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="admin-header">
+    <div class="admin-brand">
+      <span class="admin-logo">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+      </span>
+      <span class="admin-title">管理画面<small>令和8年度安全運転管理者等講習</small></span>
+    </div>
+    <a class="back-link" href="/">受講ページへ ›</a>
+  </header>
+
+  <main class="admin-main">
+    <div class="page-head">
+      <h1>統計データ</h1>
+      <p>受講状況のサマリーを表示します。</p>
+      <span class="demo-note">※ 表示データはすべて仮（ダミー）です</span>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">受講者数</div>
+        <div class="kpi-value">1,284<small> 名</small></div>
+        <div class="kpi-sub">前年比 +6.2%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">全体の視聴完了率</div>
+        <div class="kpi-value">70<small> %</small></div>
+        <div class="kpi-sub">6コマ平均</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">修了者数（全6コマ完了）</div>
+        <div class="kpi-value">538<small> 名</small></div>
+        <div class="kpi-sub">修了率 41.9%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">平均視聴時間</div>
+        <div class="kpi-value">3:12<small> /5:22</small></div>
+        <div class="kpi-sub">1人あたり</div>
+      </div>
+    </section>
+
+    <div class="panel-row">
+      <!-- 全体の視聴完了率 -->
+      <section class="panel">
+        <div class="panel-title">全体の視聴完了率</div>
+        <div class="panel-caption">全受講者・全6コマの平均</div>
+        <div class="donut-wrap">
+          <div class="donut">
+            <div class="donut-hole">
+              <span class="donut-value">70%</span>
+              <span class="donut-sub">視聴完了</span>
+            </div>
+          </div>
+          <div class="donut-legend">
+            <span><span class="dot" style="background:var(--secondary)"></span>完了 70%</span>
+            <span><span class="dot" style="background:var(--track)"></span>未完了 30%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6コマの視聴完了率 -->
+      <section class="panel">
+        <div class="panel-title">6コマの視聴完了率</div>
+        <div class="panel-caption">コマ（章）ごとの完了率</div>
+
+        <div class="bar-row">
+          <div>
+            <div class="bar-name"><b>第1章</b>福岡県警様</div>
+            <div class="bar-track"><div class="bar-fill" style="width:92%"></div></div>
+          </div>
+          <div class="bar-value">92%</div>
+        </div>
+        <div class="bar-row">
+          <div>
+            <div class="bar-name"><b>第2章</b>自動車安全運転センター 松本様</div>
+            <div class="bar-track"><div class="bar-fill" style="width:84%"></div></div>
+          </div>
+          <div class="bar-value">84%</div>
+        </div>
+        <div class="bar-row">
+          <div>
+            <div class="bar-name"><b>第3章</b>日本自動車連盟(JAF)福岡支店 田中様</div>
+            <div class="bar-track"><div class="bar-fill" style="width:76%"></div></div>
+          </div>
+          <div class="bar-value">76%</div>
+        </div>
+        <div class="bar-row">
+          <div>
+            <div class="bar-name"><b>第4章</b>日本自動車タイヤ協会 森田様</div>
+            <div class="bar-track"><div class="bar-fill" style="width:68%"></div></div>
+          </div>
+          <div class="bar-value">68%</div>
+        </div>
+        <div class="bar-row">
+          <div>
+            <div class="bar-name"><b>第5章</b>日新火災 松元様</div>
+            <div class="bar-track"><div class="bar-fill" style="width:55%"></div></div>
+          </div>
+          <div class="bar-value">55%</div>
+        </div>
+        <div class="bar-row">
+          <div>
+            <div class="bar-name"><b>第6章</b>大学教授 大上様</div>
+            <div class="bar-track"><div class="bar-fill" style="width:43%"></div></div>
+          </div>
+          <div class="bar-value">43%</div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 視聴時間帯の割合 -->
+    <section class="panel">
+      <div class="panel-title">視聴時間帯の割合</div>
+      <div class="panel-caption">1日のうち、どの時間帯に視聴が多いか（全視聴ログに占める割合）</div>
+      <div class="col-chart">
+        <div class="col">
+          <span class="col-pct">8%</span>
+          <div class="col-bar" style="height:26%"></div>
+          <span class="col-label">早朝<br>5–9時</span>
+        </div>
+        <div class="col">
+          <span class="col-pct">14%</span>
+          <div class="col-bar" style="height:45%"></div>
+          <span class="col-label">午前<br>9–12時</span>
+        </div>
+        <div class="col">
+          <span class="col-pct">12%</span>
+          <div class="col-bar" style="height:39%"></div>
+          <span class="col-label">昼<br>12–15時</span>
+        </div>
+        <div class="col">
+          <span class="col-pct">18%</span>
+          <div class="col-bar" style="height:58%"></div>
+          <span class="col-label">午後<br>15–18時</span>
+        </div>
+        <div class="col is-peak">
+          <span class="col-pct">31%</span>
+          <div class="col-bar" style="height:100%"></div>
+          <span class="col-label">夜<br>18–21時</span>
+        </div>
+        <div class="col">
+          <span class="col-pct">17%</span>
+          <div class="col-bar" style="height:55%"></div>
+          <span class="col-label">深夜<br>21–24時</span>
+        </div>
+      </div>
+      <div class="peak-note">最も視聴が多い時間帯：18〜21時（夜） — 全体の約 31%</div>
+    </section>
+  </main>
+</body>
+</html>
