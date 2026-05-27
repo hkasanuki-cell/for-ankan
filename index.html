@@ -73,6 +73,27 @@
             <button class="play-overlay" id="playOverlay" aria-label="再生">
               <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </button>
+            <div class="video-complete" id="videoComplete">
+              <div class="vc-inner">
+                <span class="vc-check"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span>
+                <h2 class="vc-title">視聴が完了しました</h2>
+                <p class="vc-sub">この講義の評価をお聞かせください</p>
+                <div class="vc-stars" id="vcStars" role="radiogroup" aria-label="5段階評価">
+                  <button class="vc-star" type="button" aria-label="1点"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 17.3 5.8 20.9l1.6-6.8L2.2 9.5l6.9-.6L12 2z"/></svg></button>
+                  <button class="vc-star" type="button" aria-label="2点"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 17.3 5.8 20.9l1.6-6.8L2.2 9.5l6.9-.6L12 2z"/></svg></button>
+                  <button class="vc-star" type="button" aria-label="3点"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 17.3 5.8 20.9l1.6-6.8L2.2 9.5l6.9-.6L12 2z"/></svg></button>
+                  <button class="vc-star" type="button" aria-label="4点"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 17.3 5.8 20.9l1.6-6.8L2.2 9.5l6.9-.6L12 2z"/></svg></button>
+                  <button class="vc-star" type="button" aria-label="5点"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 17.3 5.8 20.9l1.6-6.8L2.2 9.5l6.9-.6L12 2z"/></svg></button>
+                </div>
+                <p class="vc-rating-text" id="vcRatingText">星をタップして評価してください</p>
+                <button class="vc-chat-prompt" id="vcChatPrompt" type="button">
+                  <span class="vc-chat-ico"></span>
+                  <span>manaMateさんのチャットにもお答えください！</span>
+                  <span class="vc-chat-badge">1</span>
+                </button>
+                <button class="vc-replay" id="vcReplay" type="button">もう一度視聴する</button>
+              </div>
+            </div>
           </div>
           <div class="video-controls">
             <button class="ctrl-btn" id="playBtn" aria-label="再生／一時停止">

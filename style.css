@@ -160,6 +160,100 @@ body {
 .play-overlay:hover { transform: scale(1.06); background: #fff; }
 .video-player.is-playing .play-overlay { opacity: 0; pointer-events: none; }
 
+/* ---------- 視聴完了オーバーレイ ---------- */
+.video-complete {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: linear-gradient(160deg, rgba(13,29,56,0.96), rgba(8,18,38,0.98));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  text-align: center;
+  overflow: auto;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.video-player.is-complete .video-complete { opacity: 1; visibility: visible; pointer-events: auto; }
+
+.vc-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 440px;
+  animation: vcIn 0.4s ease-out;
+}
+@keyframes vcIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+.vc-check {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--secondary);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(25,177,132,0.4);
+}
+.vc-title { color: #fff; font-size: 1.3rem; font-weight: 700; }
+.vc-sub { color: #cfd6e4; font-size: 0.9rem; }
+
+.vc-stars { display: flex; gap: 6px; margin-top: 2px; }
+.vc-star { background: none; border: none; cursor: pointer; padding: 2px; line-height: 0; }
+.vc-star svg { fill: rgba(255,255,255,0.28); transition: fill 0.15s, transform 0.15s; }
+.vc-star:hover svg { transform: scale(1.12); }
+.vc-star.is-on svg { fill: #FFC53D; }
+.vc-rating-text { color: #ffd24a; font-size: 0.85rem; font-weight: 700; min-height: 1.2em; }
+
+.vc-chat-prompt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 9px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.vc-chat-prompt:hover { background: rgba(255,255,255,0.18); border-color: var(--secondary); }
+.vc-chat-ico {
+  width: 26px; height: 26px;
+  flex: none;
+  border-radius: 50%;
+  background: #fff url('mascot.png') center / 80% no-repeat;
+}
+.vc-chat-badge {
+  flex: none;
+  min-width: 18px; height: 18px;
+  padding: 0 5px;
+  background: #E5392F;
+  color: #fff;
+  font-size: 0.72rem;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.vc-replay {
+  margin-top: 2px;
+  background: none;
+  border: none;
+  color: #9fb0c8;
+  font-family: inherit;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.vc-replay:hover { color: #fff; }
+
 .video-controls {
   display: flex;
   align-items: center;

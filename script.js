@@ -46,13 +46,13 @@ document.querySelectorAll('.chapter-item').forEach((item) => {
     totTime.textContent = item.dataset.time;
     curTime.textContent = '0:00';
     document.getElementById('progressFill').style.width = '0%';
+    player.classList.remove('is-complete', 'is-playing');
   });
 });
 
 // ---------- 再生／一時停止トグル（UIのみ） ----------
 const player = document.getElementById('videoPlayer');
 const playBtn = document.getElementById('playBtn');
-const playOverlay = document.getElementById('playOverlay');
 const iconPlay = playBtn.querySelector('.icon-play');
 const iconPause = playBtn.querySelector('.icon-pause');
 
@@ -62,7 +62,52 @@ function togglePlay() {
   iconPause.hidden = !playing;
 }
 playBtn.addEventListener('click', togglePlay);
-playOverlay.addEventListener('click', togglePlay);
+
+// ---------- 視聴完了（動画エリアをクリック） ----------
+const videoScreen = document.querySelector('.video-screen');
+const progressFill = document.getElementById('progressFill');
+const vcStars = Array.from(document.querySelectorAll('.vc-star'));
+const vcRatingText = document.getElementById('vcRatingText');
+const vcChatPrompt = document.getElementById('vcChatPrompt');
+const vcReplay = document.getElementById('vcReplay');
+let vcRating = 0;
+
+function completeVideo() {
+  if (player.classList.contains('is-complete')) return;
+  player.classList.add('is-complete', 'is-playing');
+  progressFill.style.width = '100%';
+  curTime.textContent = totTime.textContent;
+}
+videoScreen.addEventListener('click', completeVideo);
+
+function paintStars(n) {
+  vcStars.forEach((s, i) => s.classList.toggle('is-on', i < n));
+}
+vcStars.forEach((s, i) => {
+  s.addEventListener('mouseenter', () => paintStars(i + 1));
+  s.addEventListener('click', (e) => {
+    e.stopPropagation();
+    vcRating = i + 1;
+    paintStars(vcRating);
+    vcRatingText.textContent = `評価ありがとうございました！（★${vcRating}）`;
+  });
+});
+document.getElementById('vcStars').addEventListener('mouseleave', () => paintStars(vcRating));
+
+vcChatPrompt.addEventListener('click', (e) => {
+  e.stopPropagation();
+  selectPanel('chat');
+  chatBadge.hidden = true;
+});
+
+vcReplay.addEventListener('click', (e) => {
+  e.stopPropagation();
+  player.classList.remove('is-complete', 'is-playing');
+  vcRating = 0;
+  paintStars(0);
+  vcRatingText.textContent = '星をタップして評価してください';
+  progressFill.style.width = '10%';
+});
 
 // ---------- チャット送信（UIのみ） ----------
 const chatForm = document.getElementById('chatForm');
