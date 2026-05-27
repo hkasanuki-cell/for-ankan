@@ -3,6 +3,7 @@ const tabChapters = document.getElementById('tabChapters');
 const tabChat = document.getElementById('tabChat');
 const paneChapters = document.getElementById('paneChapters');
 const paneChat = document.getElementById('paneChat');
+const chatBadge = document.getElementById('chatBadge');
 
 function selectPanel(tab) {
   const chat = tab === 'chat';
@@ -16,7 +17,10 @@ function selectPanel(tab) {
   paneChapters.hidden = chat;
 }
 tabChapters.addEventListener('click', () => selectPanel('chapters'));
-tabChat.addEventListener('click', () => selectPanel('chat'));
+tabChat.addEventListener('click', () => {
+  selectPanel('chat');
+  chatBadge.hidden = true;
+});
 
 // ---------- チャプター選択 ----------
 const lectureTitle = document.getElementById('lectureTitle');

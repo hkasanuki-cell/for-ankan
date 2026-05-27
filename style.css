@@ -232,11 +232,38 @@ body {
   color: var(--text-secondary);
   cursor: pointer;
   transition: color 0.2s, box-shadow 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 .panel-tab:hover { color: var(--primary); }
 .panel-tab.is-active {
   color: var(--primary);
   box-shadow: inset 0 -3px 0 var(--primary);
+}
+
+.tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: #E5392F;
+  color: #fff;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  animation: badgePulse 1.8s ease-out infinite;
+}
+.tab-badge[hidden] { display: none; }
+
+@keyframes badgePulse {
+  0% { box-shadow: 0 0 0 0 rgba(229,57,47,0.5); }
+  70% { box-shadow: 0 0 0 6px rgba(229,57,47,0); }
+  100% { box-shadow: 0 0 0 0 rgba(229,57,47,0); }
 }
 
 .panel-pane { display: none; flex: 1; min-height: 0; }
@@ -250,15 +277,25 @@ body {
 }
 .chapter-item {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 8px;
   padding: 12px;
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.18s;
+  border: 1px solid transparent;
+  transition: background 0.18s, border-color 0.18s;
 }
 .chapter-item:hover { background: var(--bg); }
-.chapter-item.is-current { background: var(--panel-bg); }
+.chapter-item.is-current {
+  background: var(--panel-bg);
+  border-color: rgba(21,130,116,0.25);
+}
+
+.chapter-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
 
 .chapter-state {
   flex: none;
@@ -283,12 +320,37 @@ body {
   line-height: 1.35;
 }
 .chapter-item.is-current .chapter-name { color: var(--primary); font-weight: 700; }
+
+.chapter-progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-left: 38px;
+}
+.chapter-percent {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
 .chapter-time {
-  flex: none;
   font-size: 0.8rem;
   color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+.chapter-bar {
+  height: 6px;
+  margin-left: 38px;
+  background: #e3e7df;
+  border-radius: 100px;
+  overflow: hidden;
+}
+.chapter-bar-fill {
+  height: 100%;
+  background: var(--secondary);
+  border-radius: 100px;
+  transition: width 0.3s ease;
 }
 
 /* チャット */
@@ -307,10 +369,10 @@ body {
 
 .chat-avatar {
   flex: none;
-  width: 30px; height: 30px;
+  width: 32px; height: 32px;
   border-radius: 50%;
-  background: var(--primary) radial-gradient(circle at 50% 35%, #2aa58f, var(--primary));
-  background-size: cover;
+  background: #fff url('mascot.png') center / cover no-repeat;
+  border: 1px solid #e7ebe3;
 }
 .chat-bubble {
   padding: 10px 14px;

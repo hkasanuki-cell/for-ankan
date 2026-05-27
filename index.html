@@ -15,7 +15,7 @@
         </svg>
       </span>
       <span class="logo-text">manaMate</span>
-      <span class="completion-badge">修了率 62%</span>
+      <span class="completion-badge">修了率 35%</span>
     </div>
     <button class="header-menu" aria-label="メニュー">
       <span></span><span></span><span></span>
@@ -61,41 +61,59 @@
       <aside class="side-panel">
         <div class="panel-tabs" role="tablist">
           <button class="panel-tab is-active" id="tabChapters" role="tab" aria-selected="true">チャプター</button>
-          <button class="panel-tab" id="tabChat" role="tab" aria-selected="false">チャット</button>
+          <button class="panel-tab" id="tabChat" role="tab" aria-selected="false">チャット<span class="tab-badge" id="chatBadge">1</span></button>
         </div>
 
         <!-- チャプター一覧 -->
         <div class="panel-pane is-active" id="paneChapters" role="tabpanel">
           <ul class="chapter-list" id="chapterList">
             <li class="chapter-item is-done" data-title="01_安全運転管理者等講習_福岡県警様" data-time="49:06">
-              <span class="chapter-state"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span>
-              <span class="chapter-info"><span class="chapter-num">第1章</span><span class="chapter-name">福岡県警様</span></span>
-              <span class="chapter-time">49:06</span>
+              <div class="chapter-head">
+                <span class="chapter-state"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span>
+                <span class="chapter-info"><span class="chapter-num">第1章</span><span class="chapter-name">福岡県警様</span></span>
+              </div>
+              <div class="chapter-progress-row"><span class="chapter-percent">視聴 100%</span><span class="chapter-time">49:06</span></div>
+              <div class="chapter-bar"><div class="chapter-bar-fill" style="width:100%"></div></div>
             </li>
             <li class="chapter-item is-current" data-title="02_安全運転管理者等講習_自動車安全運転センター松本様" data-time="55:44">
-              <span class="chapter-state"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-              <span class="chapter-info"><span class="chapter-num">第2章</span><span class="chapter-name">自動車安全運転センター 松本様</span></span>
-              <span class="chapter-time">55:44</span>
+              <div class="chapter-head">
+                <span class="chapter-state"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                <span class="chapter-info"><span class="chapter-num">第2章</span><span class="chapter-name">自動車安全運転センター 松本様</span></span>
+              </div>
+              <div class="chapter-progress-row"><span class="chapter-percent">視聴 60%</span><span class="chapter-time">55:44</span></div>
+              <div class="chapter-bar"><div class="chapter-bar-fill" style="width:60%"></div></div>
             </li>
             <li class="chapter-item" data-title="03_安全運転管理者等講習_日本自動車連盟(JAF)福岡支店田中様" data-time="1:02:31">
-              <span class="chapter-state"><span class="chapter-dot">3</span></span>
-              <span class="chapter-info"><span class="chapter-num">第3章</span><span class="chapter-name">日本自動車連盟(JAF)福岡支店 田中様</span></span>
-              <span class="chapter-time">1:02:31</span>
+              <div class="chapter-head">
+                <span class="chapter-state"><span class="chapter-dot">3</span></span>
+                <span class="chapter-info"><span class="chapter-num">第3章</span><span class="chapter-name">日本自動車連盟(JAF)福岡支店 田中様</span></span>
+              </div>
+              <div class="chapter-progress-row"><span class="chapter-percent">視聴 35%</span><span class="chapter-time">1:02:31</span></div>
+              <div class="chapter-bar"><div class="chapter-bar-fill" style="width:35%"></div></div>
             </li>
             <li class="chapter-item" data-title="04_安全運転管理者等講習_日本自動車タイヤ協会森田様" data-time="58:46">
-              <span class="chapter-state"><span class="chapter-dot">4</span></span>
-              <span class="chapter-info"><span class="chapter-num">第4章</span><span class="chapter-name">日本自動車タイヤ協会 森田様</span></span>
-              <span class="chapter-time">58:46</span>
+              <div class="chapter-head">
+                <span class="chapter-state"><span class="chapter-dot">4</span></span>
+                <span class="chapter-info"><span class="chapter-num">第4章</span><span class="chapter-name">日本自動車タイヤ協会 森田様</span></span>
+              </div>
+              <div class="chapter-progress-row"><span class="chapter-percent">視聴 15%</span><span class="chapter-time">58:46</span></div>
+              <div class="chapter-bar"><div class="chapter-bar-fill" style="width:15%"></div></div>
             </li>
             <li class="chapter-item" data-title="05_安全運転管理者等講習_日新火災 松元様" data-time="47:56">
-              <span class="chapter-state"><span class="chapter-dot">5</span></span>
-              <span class="chapter-info"><span class="chapter-num">第5章</span><span class="chapter-name">日新火災 松元様</span></span>
-              <span class="chapter-time">47:56</span>
+              <div class="chapter-head">
+                <span class="chapter-state"><span class="chapter-dot">5</span></span>
+                <span class="chapter-info"><span class="chapter-num">第5章</span><span class="chapter-name">日新火災 松元様</span></span>
+              </div>
+              <div class="chapter-progress-row"><span class="chapter-percent">視聴 0%</span><span class="chapter-time">47:56</span></div>
+              <div class="chapter-bar"><div class="chapter-bar-fill" style="width:0%"></div></div>
             </li>
             <li class="chapter-item" data-title="06_安全運転管理者等講習_大学教授 大上様" data-time="48:55">
-              <span class="chapter-state"><span class="chapter-dot">6</span></span>
-              <span class="chapter-info"><span class="chapter-num">第6章</span><span class="chapter-name">大学教授 大上様</span></span>
-              <span class="chapter-time">48:55</span>
+              <div class="chapter-head">
+                <span class="chapter-state"><span class="chapter-dot">6</span></span>
+                <span class="chapter-info"><span class="chapter-num">第6章</span><span class="chapter-name">大学教授 大上様</span></span>
+              </div>
+              <div class="chapter-progress-row"><span class="chapter-percent">視聴 0%</span><span class="chapter-time">48:55</span></div>
+              <div class="chapter-bar"><div class="chapter-bar-fill" style="width:0%"></div></div>
             </li>
           </ul>
         </div>
