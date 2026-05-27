@@ -371,7 +371,7 @@ body {
   flex: none;
   width: 32px; height: 32px;
   border-radius: 50%;
-  background: #fff url('mascot.png') center / cover no-repeat;
+  background: #fff url('mascot.png') center / 80% no-repeat;
   border: 1px solid #e7ebe3;
 }
 .chat-bubble {
