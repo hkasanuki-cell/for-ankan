@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>マーケットプレイス｜manaMate 管理画面</title>
+  <link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="side-brand" href="/admin">
+        <span class="side-logo">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+        </span>
+        <span class="side-brand-text">manaMate</span>
+      </a>
+      <nav class="side-nav">
+        <a class="nav-item" href="/admin">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 3h8v8H3V3zm10 0h8v5h-8V3zM3 13h8v8H3v-8zm10 3h8v5h-8v-5z"/></svg>
+          ダッシュボード
+        </a>
+        <a class="nav-item is-active" href="/admin/marketplace">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4 4h16l-1 5a3 3 0 0 1-3 2.5A3 3 0 0 1 13 9a3 3 0 0 1-6 0 3 3 0 0 1-3 2.5L3 4h1zm1 9v7h14v-7a4.5 4.5 0 0 1-3-.4 4.5 4.5 0 0 1-5 0 4.5 4.5 0 0 1-6 .4z"/></svg>
+          マーケットプレイス
+        </a>
+        <a class="nav-item" href="/">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm6 4v8l6-4-6-4z"/></svg>
+          受講ページ
+        </a>
+      </nav>
+      <div class="side-foot">
+        <div class="side-tenant">
+          <span class="side-tenant-label">テナント</span>
+          <span class="side-tenant-name">福岡県安全運転管理者</span>
+        </div>
+        <div class="side-user">admin@pref-fukuoka-ankan</div>
+      </div>
+    </aside>
+
+    <div class="content">
+      <header class="content-header">
+        <h1 class="content-title">マーケットプレイス</h1>
+        <span class="content-date">2026年5月27日(水)</span>
+      </header>
+
+      <main class="content-main">
+        <p class="page-lead">他の都道府県警察本部が作成した動画を探して、自社のmanaableに取り込めます。</p>
+        <span class="demo-note">※ 表示データはすべて仮（ダミー）です</span>
+
+        <div class="mp-toolbar">
+          <div class="mp-search">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M21 20l-5.6-5.6a7 7 0 1 0-1.4 1.4L20 21l1-1zM5 10a5 5 0 1 1 10 0 5 5 0 0 1-10 0z"/></svg>
+            <input type="text" id="mpSearch" placeholder="動画タイトル・警察本部名で検索…" autocomplete="off" />
+          </div>
+          <span class="mp-count" id="mpCount">8件の動画</span>
+        </div>
+
+        <div class="mp-grid" id="mpGrid">
+          <article class="mp-card" data-search="東京都警察本部 高齢運転者の事故防止と対策">
+            <div class="mp-thumb">
+              <span class="mp-pref">東京都警察本部</span>
+              <button class="mp-play" aria-label="プレビュー"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <span class="mp-duration">42:10</span>
+            </div>
+            <div class="mp-body">
+              <h3 class="mp-title">高齢運転者の事故防止と対策</h3>
+              <div class="mp-meta"><span class="star">★4.6</span> ・ 視聴 1.2万回</div>
+              <button class="mp-import">自社のmanaableに取り込む</button>
+            </div>
+          </article>
+
+          <article class="mp-card" data-search="大阪府警察本部 飲酒運転根絶に向けた取り組み">
+            <div class="mp-thumb">
+              <span class="mp-pref">大阪府警察本部</span>
+              <button class="mp-play" aria-label="プレビュー"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <span class="mp-duration">38:24</span>
+            </div>
+            <div class="mp-body">
+              <h3 class="mp-title">飲酒運転根絶に向けた取り組み</h3>
+              <div class="mp-meta"><span class="star">★4.4</span> ・ 視聴 9,800回</div>
+              <button class="mp-import">自社のmanaableに取り込む</button>
+            </div>
+          </article>
+
+          <article class="mp-card" data-search="北海道警察本部 冬道の安全運転と路面凍結対策">
+            <div class="mp-thumb">
+              <span class="mp-pref">北海道警察本部</span>
+              <button class="mp-play" aria-label="プレビュー"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <span class="mp-duration">51:30</span>
+            </div>
+            <div class="mp-body">
+              <h3 class="mp-title">冬道の安全運転と路面凍結対策</h3>
+              <div class="mp-meta"><span class="star">★4.7</span> ・ 視聴 1.5万回</div>
+              <button class="mp-import">自社のmanaableに取り込む</button>
+            </div>
+          </article>
+
+          <article class="mp-card" data-search="愛知県警察本部 事業所における交通安全教育の進め方">
+            <div class="mp-thumb">
+              <span class="mp-pref">愛知県警察本部</span>
+              <button class="mp-play" aria-label="プレビュー"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <span class="mp-duration">45:05</span>
+            </div>
+            <div class="mp-body">
+              <h3 class="mp-title">事業所における交通安全教育の進め方</h3>
+              <div class="mp-meta"><span class="star">★4.3</span> ・ 視聴 7,300回</div>
+              <button class="mp-import">自社のmanaableに取り込む</button>
+            </div>
+          </article>
+
+          <article class="mp-card" data-search="神奈川県警察本部 自転車の交通ルールと安全指導">
+            <div class="mp-thumb">
+              <span class="mp-pref">神奈川県警察本部</span>
+              <button class="mp-play" aria-label="プレビュー"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <span class="mp-duration">33:48</span>
+            </div>
+            <div class="mp-body">
+              <h3 class="mp-title">自転車の交通ルールと安全指導</h3>
+              <div class="mp-meta"><span class="star">★4.5</span> ・ 視聴 8,600回</div>
+              <button class="mp-import">自社のmanaableに取り込む</button>
+            </div>
+          </article>
+
+          <article class="mp-card" data-search="京都府警察本部 横断歩道における歩行者保護の徹底">
+            <div class="mp-thumb">
+              <span class="mp-pref">京都府警察本部</span>
+              <button class="mp-play" aria-label="プレビュー"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <span class="mp-duration">29:12</span>
+            </div>
+            <div class="mp-body">
+              <h3 class="mp-title">横断歩道における歩行者保護の徹底</h3>
+              <div class="mp-meta"><span class="star">★4.8</span> ・ 視聴 1.1万回</div>
+              <button class="mp-import">自社のmanaableに取り込む</button>
+            </div>
+          </article>
+
+          <article class="mp-card" data-search="兵庫県警察本部 大型車・トラックの安全管理と日常点検">
+            <div class="mp-thumb">
+              <span class="mp-pref">兵庫県警察本部</span>
+              <button class="mp-play" aria-label="プレビュー"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <span class="mp-duration">47:36</span>
+            </div>
+            <div class="mp-body">
+              <h3 class="mp-title">大型車・トラックの安全管理と日常点検</h3>
+              <div class="mp-meta"><span class="star">★4.2</span> ・ 視聴 5,900回</div>
+              <button class="mp-import">自社のmanaableに取り込む</button>
+            </div>
+          </article>
+
+          <article class="mp-card" data-search="広島県警察本部 あおり運転 妨害運転の防止">
+            <div class="mp-thumb">
+              <span class="mp-pref">広島県警察本部</span>
+              <button class="mp-play" aria-label="プレビュー"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <span class="mp-duration">36:50</span>
+            </div>
+            <div class="mp-body">
+              <h3 class="mp-title">あおり運転（妨害運転）の防止</h3>
+              <div class="mp-meta"><span class="star">★4.6</span> ・ 視聴 1.3万回</div>
+              <button class="mp-import">自社のmanaableに取り込む</button>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const search = document.getElementById('mpSearch');
+    const grid = document.getElementById('mpGrid');
+    const count = document.getElementById('mpCount');
+    const cards = Array.from(grid.querySelectorAll('.mp-card'));
+
+    function applyFilter() {
+      const q = search.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach((card) => {
+        const hit = card.dataset.search.toLowerCase().includes(q);
+        card.style.display = hit ? '' : 'none';
+        if (hit) visible++;
+      });
+      count.textContent = `${visible}件の動画`;
+      let empty = grid.querySelector('.mp-empty');
+      if (visible === 0 && !empty) {
+        empty = document.createElement('div');
+        empty.className = 'mp-empty';
+        empty.textContent = '該当する動画が見つかりませんでした。';
+        grid.appendChild(empty);
+      } else if (visible > 0 && empty) {
+        empty.remove();
+      }
+    }
+    search.addEventListener('input', applyFilter);
+
+    grid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.mp-import');
+      if (!btn) return;
+      const card = btn.closest('.mp-card');
+      if (card.classList.contains('is-imported')) return;
+      card.classList.add('is-imported');
+      btn.textContent = '取り込み済み ✓';
+    });
+  </script>
+</body>
+</html>
