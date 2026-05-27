@@ -122,7 +122,6 @@
       width: 180px; height: 180px;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      background: conic-gradient(var(--secondary) 0% 70%, var(--track) 70% 100%);
     }
     .donut-hole {
       width: 128px; height: 128px;
@@ -144,6 +143,8 @@
     .bar-track { height: 12px; background: var(--track); border-radius: 100px; overflow: hidden; }
     .bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--primary), var(--secondary)); }
     .bar-value { font-size: 0.95rem; font-weight: 700; color: var(--primary); text-align: right; font-variant-numeric: tabular-nums; }
+    .bar-fill--rating { background: linear-gradient(90deg, #DFA32A, #F2C14E); }
+    .bar-value--rating { color: #C8862B; }
 
     /* 縦棒グラフ（時間帯別） */
     .col-chart { display: flex; align-items: flex-end; gap: 14px; height: 200px; padding-top: 16px; }
@@ -217,8 +218,8 @@
       </div>
       <div class="kpi-card">
         <div class="kpi-label">平均視聴時間</div>
-        <div class="kpi-value">3:12<small> /5:22</small></div>
-        <div class="kpi-sub">1人あたり</div>
+        <div class="kpi-value">3<small>時間</small>12<small>分</small></div>
+        <div class="kpi-sub">1人あたり（全5時間22分）</div>
       </div>
     </section>
 
@@ -228,7 +229,7 @@
         <div class="panel-title">全体の視聴完了率</div>
         <div class="panel-caption">全受講者・全6コマの平均</div>
         <div class="donut-wrap">
-          <div class="donut">
+          <div class="donut" style="background: conic-gradient(var(--secondary) 0% 70%, var(--track) 70% 100%);">
             <div class="donut-hole">
               <span class="donut-value">70%</span>
               <span class="donut-sub">視聴完了</span>
@@ -287,6 +288,75 @@
             <div class="bar-track"><div class="bar-fill" style="width:43%"></div></div>
           </div>
           <div class="bar-value">43%</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="panel-row">
+      <!-- リピート率 -->
+      <section class="panel">
+        <div class="panel-title">リピート率</div>
+        <div class="panel-caption">同じ動画を再度視聴したユーザーの割合</div>
+        <div class="donut-wrap">
+          <div class="donut" style="background: conic-gradient(#DFA32A 0% 44%, var(--track) 44% 100%);">
+            <div class="donut-hole">
+              <span class="donut-value">44%</span>
+              <span class="donut-sub">リピート</span>
+            </div>
+          </div>
+          <div class="donut-legend">
+            <span><span class="dot" style="background:#DFA32A"></span>リピートあり 44%</span>
+            <span><span class="dot" style="background:var(--track)"></span>初回のみ 56%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6コマの評価 -->
+      <section class="panel">
+        <div class="panel-title">6コマの評価</div>
+        <div class="panel-caption">コマ（章）ごとの平均評価（5点満点）</div>
+
+        <div class="bar-row">
+          <div>
+            <div class="bar-name"><b>第1章</b>福岡県警様</div>
+            <div class="bar-track"><div class="bar-fill bar-fill--rating" style="width:94%"></div></div>
+          </div>
+          <div class="bar-value bar-value--rating">★4.7</div>
+        </div>
+        <div class="bar-row">
+          <div>
+            <div class="bar-name"><b>第2章</b>自動車安全運転センター 松本様</div>
+            <div class="bar-track"><div class="bar-fill bar-fill--rating" style="width:90%"></div></div>
+          </div>
+          <div class="bar-value bar-value--rating">★4.5</div>
+        </div>
+        <div class="bar-row">
+          <div>
+            <div class="bar-name"><b>第3章</b>日本自動車連盟(JAF)福岡支店 田中様</div>
+            <div class="bar-track"><div class="bar-fill bar-fill--rating" style="width:84%"></div></div>
+          </div>
+          <div class="bar-value bar-value--rating">★4.2</div>
+        </div>
+        <div class="bar-row">
+          <div>
+            <div class="bar-name"><b>第4章</b>日本自動車タイヤ協会 森田様</div>
+            <div class="bar-track"><div class="bar-fill bar-fill--rating" style="width:88%"></div></div>
+          </div>
+          <div class="bar-value bar-value--rating">★4.4</div>
+        </div>
+        <div class="bar-row">
+          <div>
+            <div class="bar-name"><b>第5章</b>日新火災 松元様</div>
+            <div class="bar-track"><div class="bar-fill bar-fill--rating" style="width:80%"></div></div>
+          </div>
+          <div class="bar-value bar-value--rating">★4.0</div>
+        </div>
+        <div class="bar-row">
+          <div>
+            <div class="bar-name"><b>第6章</b>大学教授 大上様</div>
+            <div class="bar-track"><div class="bar-fill bar-fill--rating" style="width:92%"></div></div>
+          </div>
+          <div class="bar-value bar-value--rating">★4.6</div>
         </div>
       </section>
     </div>
