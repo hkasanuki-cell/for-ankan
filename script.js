@@ -209,7 +209,7 @@ const chatForm = document.getElementById('chatForm');
 const chatField = document.getElementById('chatField');
 const chatThread = document.getElementById('chatThread');
 
-function appendChatBubble(who, text) {
+function appendChatBubble(who, text, extra) {
   const row = document.createElement('div');
   row.className = 'chat-row ' + (who === 'ai' ? 'chat-ai' : 'chat-me');
   if (who === 'ai') {
@@ -220,7 +220,15 @@ function appendChatBubble(who, text) {
   const bubble = document.createElement('div');
   bubble.className = 'chat-bubble';
   bubble.textContent = text;
-  row.appendChild(bubble);
+  if (extra) {
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-bubble-wrap';
+    wrap.appendChild(bubble);
+    wrap.appendChild(extra);
+    row.appendChild(wrap);
+  } else {
+    row.appendChild(bubble);
+  }
   chatThread.appendChild(row);
   chatThread.scrollTop = chatThread.scrollHeight;
 }
@@ -235,9 +243,19 @@ chatForm.addEventListener('submit', (e) => {
   setTimeout(() => {
     const isComplete = player.classList.contains('is-complete');
     let reply;
+    let cta = null;
     if (isComplete) {
       if (hasRated && lastAdvanced) {
-        reply = 'ありがとうございました！次の章（第3章）が受講できるようになりました。引き続きよろしくお願いします！';
+        const targetChapter = lastAdvanced;
+        const numText = targetChapter.querySelector('.chapter-num')?.textContent || '次の章';
+        reply = `ありがとうございました！${numText}が受講できるようになりました。引き続きよろしくお願いします！`;
+        cta = document.createElement('button');
+        cta.type = 'button';
+        cta.className = 'chat-cta';
+        cta.textContent = `${numText}を受講する →`;
+        cta.addEventListener('click', () => {
+          if (targetChapter) targetChapter.click();
+        });
       } else if (!hasRated) {
         reply = 'コメントありがとうございます！よければ ★ での評価もお願いできますか？';
       } else {
@@ -246,7 +264,7 @@ chatForm.addEventListener('submit', (e) => {
     } else {
       reply = 'お返事ありがとうございます！';
     }
-    appendChatBubble('ai', reply);
+    appendChatBubble('ai', reply, cta);
     if (isComplete) {
       hasChatted = true;
       tryUnlockNext();
