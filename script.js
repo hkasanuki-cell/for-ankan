@@ -47,6 +47,9 @@ document.querySelectorAll('.chapter-item').forEach((item) => {
     curTime.textContent = '0:00';
     document.getElementById('progressFill').style.width = '0%';
     player.classList.remove('is-complete', 'is-playing');
+    // ユーザーが章を移動したら、リプレイによる自動復元を無効化
+    lastCompleted = null;
+    lastAdvanced = null;
   });
 });
 
@@ -71,6 +74,56 @@ const vcRatingText = document.getElementById('vcRatingText');
 const vcChatPrompt = document.getElementById('vcChatPrompt');
 const vcReplay = document.getElementById('vcReplay');
 let vcRating = 0;
+let lastCompleted = null;
+let lastAdvanced = null;
+
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const CHECK_PATH_D = 'M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z';
+const PLAY_PATH_D = 'M8 5v14l11-7z';
+function makeIconSvg(size, pathD) {
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('width', String(size));
+  svg.setAttribute('height', String(size));
+  svg.setAttribute('fill', 'currentColor');
+  const path = document.createElementNS(SVG_NS, 'path');
+  path.setAttribute('d', pathD);
+  svg.appendChild(path);
+  return svg;
+}
+
+function setChapterDone(item) {
+  item.classList.remove('is-current');
+  item.classList.add('is-done');
+  item.querySelector('.chapter-state').replaceChildren(makeIconSvg(16, CHECK_PATH_D));
+  const fill = item.querySelector('.chapter-bar-fill');
+  if (fill) fill.style.width = '100%';
+  const pct = item.querySelector('.chapter-percent');
+  if (pct) pct.textContent = '視聴 100%';
+}
+function setChapterCurrent(item, progress) {
+  item.classList.remove('is-done');
+  item.classList.add('is-current');
+  item.querySelector('.chapter-state').replaceChildren(makeIconSvg(14, PLAY_PATH_D));
+  if (typeof progress === 'number') {
+    const fill = item.querySelector('.chapter-bar-fill');
+    if (fill) fill.style.width = progress + '%';
+    const pct = item.querySelector('.chapter-percent');
+    if (pct) pct.textContent = '視聴 ' + progress + '%';
+  }
+}
+function setChapterPending(item) {
+  item.classList.remove('is-done', 'is-current');
+  const num = item.querySelector('.chapter-num')?.textContent.replace(/[^0-9]/g, '') || '';
+  const dot = document.createElement('span');
+  dot.className = 'chapter-dot';
+  dot.textContent = num;
+  item.querySelector('.chapter-state').replaceChildren(dot);
+  const fill = item.querySelector('.chapter-bar-fill');
+  if (fill) fill.style.width = '0%';
+  const pct = item.querySelector('.chapter-percent');
+  if (pct) pct.textContent = '視聴 0%';
+}
 
 function completeVideo() {
   if (player.classList.contains('is-complete')) return;
@@ -79,6 +132,19 @@ function completeVideo() {
   curTime.textContent = totTime.textContent;
   // 視聴完了でチャットが届く → 赤丸を表示（既にチャットタブを開いていれば不要）
   if (!tabChat.classList.contains('is-active')) chatBadge.hidden = false;
+  // 完了した章を done に、次の章を current に
+  const cur = document.querySelector('.chapter-item.is-current');
+  if (cur) {
+    setChapterDone(cur);
+    lastCompleted = cur;
+    const next = cur.nextElementSibling;
+    if (next && next.classList.contains('chapter-item')) {
+      setChapterCurrent(next);
+      lastAdvanced = next;
+    } else {
+      lastAdvanced = null;
+    }
+  }
 }
 videoScreen.addEventListener('click', completeVideo);
 
@@ -110,6 +176,11 @@ vcReplay.addEventListener('click', (e) => {
   vcRatingText.textContent = '星をタップして評価してください';
   progressFill.style.width = '10%';
   chatBadge.hidden = true;
+  // 章状態を元に戻す（完了→現在に、現在→未視聴に）
+  if (lastAdvanced) setChapterPending(lastAdvanced);
+  if (lastCompleted) setChapterCurrent(lastCompleted, 0);
+  lastCompleted = null;
+  lastAdvanced = null;
 });
 
 // ---------- チャット送信（UIのみ） ----------
