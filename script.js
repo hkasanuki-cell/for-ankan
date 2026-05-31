@@ -154,7 +154,10 @@ fsBtn.addEventListener('click', () => {
   else enterFullscreen();
 });
 function onFsChange() {
-  fsTarget.classList.toggle('is-fullscreen', currentFsElement() === fsTarget);
+  const inFs = currentFsElement() === fsTarget;
+  fsTarget.classList.toggle('is-fullscreen', inFs);
+  const label = document.querySelector('.ctrl-fs-label');
+  if (label) label.textContent = inFs ? '閉じる' : '拡大する';
 }
 document.addEventListener('fullscreenchange', onFsChange);
 document.addEventListener('webkitfullscreenchange', onFsChange);

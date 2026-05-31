@@ -573,6 +573,39 @@ body {
   height: 100%;
   max-height: none;
 }
+
+/* 拡大ボタン（テキスト付きピル） */
+.ctrl-fs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.28);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+.ctrl-fs:hover { background: rgba(255,255,255,0.22); border-color: var(--secondary); }
+
+/* 全画面時の完了オーバーレイの文字を大きく */
+.viewer-grid.is-fullscreen .vc-inner { gap: 16px; max-width: 640px; }
+.viewer-grid.is-fullscreen .vc-check { width: 72px; height: 72px; }
+.viewer-grid.is-fullscreen .vc-check svg { width: 38px; height: 38px; }
+.viewer-grid.is-fullscreen .vc-title { font-size: 2.4rem; }
+.viewer-grid.is-fullscreen .vc-sub { font-size: 1.2rem; }
+.viewer-grid.is-fullscreen .vc-star svg { width: 52px; height: 52px; }
+.viewer-grid.is-fullscreen .vc-rating-text { font-size: 1.15rem; }
+.viewer-grid.is-fullscreen .vc-chat-prompt { font-size: 1.1rem; padding: 14px 24px; }
+.viewer-grid.is-fullscreen .vc-chat-ico { width: 36px; height: 36px; }
+.viewer-grid.is-fullscreen .vc-chat-badge { min-width: 24px; height: 24px; font-size: 0.88rem; }
+.viewer-grid.is-fullscreen .vc-replay { font-size: 1rem; }
+
 @media (max-width: 760px) {
   .viewer-grid.is-fullscreen { grid-template-columns: 1fr; grid-template-rows: 1fr 280px; }
 }
