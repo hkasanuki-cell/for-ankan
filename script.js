@@ -133,3 +133,28 @@ chatForm.addEventListener('submit', (e) => {
   chatField.value = '';
   chatThread.scrollTop = chatThread.scrollHeight;
 });
+
+// ---------- 全画面（動画＋チャプター/チャットを同時に拡大） ----------
+const fsBtn = document.getElementById('fullscreenBtn');
+const fsTarget = document.querySelector('.viewer-grid');
+
+function currentFsElement() {
+  return document.fullscreenElement || document.webkitFullscreenElement || null;
+}
+function enterFullscreen() {
+  if (fsTarget.requestFullscreen) fsTarget.requestFullscreen();
+  else if (fsTarget.webkitRequestFullscreen) fsTarget.webkitRequestFullscreen();
+}
+function exitFullscreen() {
+  if (document.exitFullscreen) document.exitFullscreen();
+  else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+}
+fsBtn.addEventListener('click', () => {
+  if (currentFsElement()) exitFullscreen();
+  else enterFullscreen();
+});
+function onFsChange() {
+  fsTarget.classList.toggle('is-fullscreen', currentFsElement() === fsTarget);
+}
+document.addEventListener('fullscreenchange', onFsChange);
+document.addEventListener('webkitfullscreenchange', onFsChange);
