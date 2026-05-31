@@ -410,6 +410,12 @@ body {
 }
 .chapter-item.is-done .chapter-state { background: var(--accent); }
 .chapter-item.is-current .chapter-state { background: var(--primary); }
+.chapter-item.is-locked {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.chapter-item.is-locked .chapter-state { background: #b8c0ad; }
 .chapter-dot { font-size: 0.85rem; font-weight: 700; }
 
 .chapter-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }

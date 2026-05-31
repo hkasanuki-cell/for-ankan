@@ -50,6 +50,8 @@ document.querySelectorAll('.chapter-item').forEach((item) => {
     // ユーザーが章を移動したら、リプレイによる自動復元を無効化
     lastCompleted = null;
     lastAdvanced = null;
+    hasRated = false;
+    hasChatted = false;
   });
 });
 
@@ -76,10 +78,13 @@ const vcReplay = document.getElementById('vcReplay');
 let vcRating = 0;
 let lastCompleted = null;
 let lastAdvanced = null;
+let hasRated = false;
+let hasChatted = false;
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const CHECK_PATH_D = 'M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z';
 const PLAY_PATH_D = 'M8 5v14l11-7z';
+const LOCK_PATH_D = 'M18 10h-2V7a4 4 0 0 0-8 0v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2zM10 7a2 2 0 1 1 4 0v3h-4V7z';
 function makeIconSvg(size, pathD) {
   const svg = document.createElementNS(SVG_NS, 'svg');
   svg.setAttribute('viewBox', '0 0 24 24');
@@ -93,7 +98,7 @@ function makeIconSvg(size, pathD) {
 }
 
 function setChapterDone(item) {
-  item.classList.remove('is-current');
+  item.classList.remove('is-current', 'is-locked');
   item.classList.add('is-done');
   item.querySelector('.chapter-state').replaceChildren(makeIconSvg(16, CHECK_PATH_D));
   const fill = item.querySelector('.chapter-bar-fill');
@@ -102,7 +107,7 @@ function setChapterDone(item) {
   if (pct) pct.textContent = '視聴 100%';
 }
 function setChapterCurrent(item, progress) {
-  item.classList.remove('is-done');
+  item.classList.remove('is-done', 'is-locked');
   item.classList.add('is-current');
   item.querySelector('.chapter-state').replaceChildren(makeIconSvg(14, PLAY_PATH_D));
   if (typeof progress === 'number') {
@@ -113,7 +118,7 @@ function setChapterCurrent(item, progress) {
   }
 }
 function setChapterPending(item) {
-  item.classList.remove('is-done', 'is-current');
+  item.classList.remove('is-done', 'is-current', 'is-locked');
   const num = item.querySelector('.chapter-num')?.textContent.replace(/[^0-9]/g, '') || '';
   const dot = document.createElement('span');
   dot.className = 'chapter-dot';
@@ -124,6 +129,18 @@ function setChapterPending(item) {
   const pct = item.querySelector('.chapter-percent');
   if (pct) pct.textContent = '視聴 0%';
 }
+function setChapterLocked(item) {
+  item.classList.remove('is-current', 'is-done');
+  item.classList.add('is-locked');
+  item.querySelector('.chapter-state').replaceChildren(makeIconSvg(14, LOCK_PATH_D));
+}
+
+function tryUnlockNext() {
+  if (hasRated && hasChatted && lastAdvanced) {
+    setChapterCurrent(lastAdvanced);
+    lastAdvanced = null;
+  }
+}
 
 function completeVideo() {
   if (player.classList.contains('is-complete')) return;
@@ -132,14 +149,14 @@ function completeVideo() {
   curTime.textContent = totTime.textContent;
   // 視聴完了でチャットが届く → 赤丸を表示（既にチャットタブを開いていれば不要）
   if (!tabChat.classList.contains('is-active')) chatBadge.hidden = false;
-  // 完了した章を done に、次の章を current に
+  // 完了した章を done に。次の章は「ロック」状態に（★評価＋チャットで解放）
   const cur = document.querySelector('.chapter-item.is-current');
   if (cur) {
     setChapterDone(cur);
     lastCompleted = cur;
     const next = cur.nextElementSibling;
     if (next && next.classList.contains('chapter-item')) {
-      setChapterCurrent(next);
+      setChapterLocked(next);
       lastAdvanced = next;
     } else {
       lastAdvanced = null;
@@ -158,6 +175,8 @@ vcStars.forEach((s, i) => {
     vcRating = i + 1;
     paintStars(vcRating);
     vcRatingText.textContent = `評価ありがとうございました！（★${vcRating}）`;
+    hasRated = true;
+    tryUnlockNext();
   });
 });
 document.getElementById('vcStars').addEventListener('mouseleave', () => paintStars(vcRating));
@@ -176,11 +195,13 @@ vcReplay.addEventListener('click', (e) => {
   vcRatingText.textContent = '星をタップして評価してください';
   progressFill.style.width = '10%';
   chatBadge.hidden = true;
-  // 章状態を元に戻す（完了→現在に、現在→未視聴に）
+  // 章状態を元に戻す（完了→現在に、ロック/現在→未視聴に）
   if (lastAdvanced) setChapterPending(lastAdvanced);
   if (lastCompleted) setChapterCurrent(lastCompleted, 0);
   lastCompleted = null;
   lastAdvanced = null;
+  hasRated = false;
+  hasChatted = false;
 });
 
 // ---------- チャット送信（UIのみ） ----------
@@ -188,21 +209,49 @@ const chatForm = document.getElementById('chatForm');
 const chatField = document.getElementById('chatField');
 const chatThread = document.getElementById('chatThread');
 
-chatForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const text = chatField.value.trim();
-  if (!text) return;
-
+function appendChatBubble(who, text) {
   const row = document.createElement('div');
-  row.className = 'chat-row chat-me';
+  row.className = 'chat-row ' + (who === 'ai' ? 'chat-ai' : 'chat-me');
+  if (who === 'ai') {
+    const avatar = document.createElement('span');
+    avatar.className = 'chat-avatar';
+    row.appendChild(avatar);
+  }
   const bubble = document.createElement('div');
   bubble.className = 'chat-bubble';
   bubble.textContent = text;
   row.appendChild(bubble);
   chatThread.appendChild(row);
-
-  chatField.value = '';
   chatThread.scrollTop = chatThread.scrollHeight;
+}
+
+chatForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const text = chatField.value.trim();
+  if (!text) return;
+  appendChatBubble('me', text);
+  chatField.value = '';
+  // manaMate からの自動返信
+  setTimeout(() => {
+    const isComplete = player.classList.contains('is-complete');
+    let reply;
+    if (isComplete) {
+      if (hasRated && lastAdvanced) {
+        reply = 'ありがとうございました！次の章（第3章）が受講できるようになりました。引き続きよろしくお願いします！';
+      } else if (!hasRated) {
+        reply = 'コメントありがとうございます！よければ ★ での評価もお願いできますか？';
+      } else {
+        reply = 'ありがとうございます！';
+      }
+    } else {
+      reply = 'お返事ありがとうございます！';
+    }
+    appendChatBubble('ai', reply);
+    if (isComplete) {
+      hasChatted = true;
+      tryUnlockNext();
+    }
+  }, 700);
 });
 
 // ---------- 全画面（動画＋チャプター/チャットを同時に拡大） ----------
