@@ -77,6 +77,8 @@ function completeVideo() {
   player.classList.add('is-complete', 'is-playing');
   progressFill.style.width = '100%';
   curTime.textContent = totTime.textContent;
+  // 視聴完了でチャットが届く → 赤丸を表示（既にチャットタブを開いていれば不要）
+  if (!tabChat.classList.contains('is-active')) chatBadge.hidden = false;
 }
 videoScreen.addEventListener('click', completeVideo);
 
@@ -107,6 +109,7 @@ vcReplay.addEventListener('click', (e) => {
   paintStars(0);
   vcRatingText.textContent = '星をタップして評価してください';
   progressFill.style.width = '10%';
+  chatBadge.hidden = true;
 });
 
 // ---------- チャット送信（UIのみ） ----------
